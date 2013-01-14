@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/compile/poi-4.0-beta1-20130114.jar"/>
 	<classpathentry kind="lib" path="lib/compile/poi-ooxml-4.0-beta1-20130114.jar"/>
@@ -12,5 +13,9 @@
 	<classpathentry kind="lib" path="lib/compile/spring-webscripts-1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/compile/Alfresco-Core-4.1.0-SNAPSHOT-20120827.jar"/>
 	<classpathentry kind="lib" path="lib/compile/Alfresco-DataModel-Part-4.1.0-SNAPSHOT-20120827.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/compile/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/compile/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/compile/stax-api-1.0.1.jar"/>
 	<classpathentry kind="output" path="build/eclipse-classes"/>
 </classpath>

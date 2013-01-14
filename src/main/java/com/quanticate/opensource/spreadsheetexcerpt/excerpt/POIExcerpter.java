@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -92,13 +93,23 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
                   switch (c.getCachedFormulaResultType())
                   {
                      case Cell.CELL_TYPE_NUMERIC:
-                        c.setCellValue( c.getNumericCellValue() );
+                        double vd = c.getNumericCellValue();
+                        c.setCellType(Cell.CELL_TYPE_NUMERIC);
+                        c.setCellValue(vd);
+                        break;
                      case Cell.CELL_TYPE_STRING:
-                        c.setCellValue( c.getRichStringCellValue() );
+                        RichTextString vs = c.getRichStringCellValue();
+                        c.setCellType(Cell.CELL_TYPE_STRING);
+                        c.setCellValue(vs);
+                        break;
                      case Cell.CELL_TYPE_BOOLEAN:
-                        c.setCellValue( c.getBooleanCellValue() );
+                        boolean vb = c.getBooleanCellValue();
+                        c.setCellType(Cell.CELL_TYPE_BOOLEAN);
+                        c.setCellValue(vb);
+                        break;
                      case Cell.CELL_TYPE_ERROR:
                         c.setCellType(Cell.CELL_TYPE_BLANK);
+                        break;
                   }
                }
             }
