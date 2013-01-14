@@ -50,9 +50,9 @@
    <target name="package-amp" depends="init,package-jar">
        <zip destfile="${amp.file}" >
           <fileset dir="${project.dir}/build" includes="lib/*.jar" />
-          <fileset dir="${project.dir}/config/repository/alfresco/module/com.quanticate.opensource.spreadsheetexcerpt" 
+          <fileset dir="${project.dir}/config/alfresco/module/com.quanticate.opensource.spreadsheetexcerpt" 
                    includes="module.properties" />
-          <zipfileset dir="${project.dir}/config/repository" 
+          <zipfileset dir="${project.dir}/config/" 
                    includes="**" excludes="**/module.properties" 
                    prefix="config" />
        </zip>
@@ -62,6 +62,6 @@
       <echo message="Packaging Completed" />
       <echo message="You should now install the AMP into the Alfresco Repository" />
       <echo message=""/>
-      <echo message="AMP:  ${amp.repo.file}"/>
+      <echo message="AMP:  ${amp.file}"/>
    </target>
 </project>
