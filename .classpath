@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/compile/poi-4.0-beta1-20130114.jar"/>
+	<classpathentry kind="lib" path="lib/compile/poi-ooxml-4.0-beta1-20130114.jar"/>
+	<classpathentry kind="lib" path="lib/compile/poi-ooxml-schemas-4.0-beta1-20130114.jar"/>
+	<classpathentry kind="lib" path="lib/compile/poi-scratchpad-4.0-beta1-20130114.jar"/>
+	<classpathentry kind="lib" path="lib/compile/Alfresco-Repository-Part-4.1.0-SNAPSHOT-20120827.jar"/>
+	<classpathentry kind="lib" path="lib/compile/org.springframework.beans-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/compile/spring-surf-core-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/compile/spring-webscripts-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/compile/Alfresco-Core-4.1.0-SNAPSHOT-20120827.jar"/>
+	<classpathentry kind="lib" path="lib/compile/Alfresco-DataModel-Part-4.1.0-SNAPSHOT-20120827.jar"/>
+	<classpathentry kind="output" path="build/eclipse-classes"/>
+</classpath>
