@@ -57,7 +57,11 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
       List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
       for (String sn : sheetsToKeep)
       {
-         keep.add( wb.getSheet(sn) );
+         Sheet s = wb.getSheet(sn);
+         if (s == null)
+            throw new IllegalArgumentException("Sheet not found with name '" + sn + "'");
+            
+         keep.add(s);
       }
       
       excerpt(wb, keep, output);
