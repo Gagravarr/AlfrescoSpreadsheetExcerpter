@@ -64,4 +64,24 @@
       <echo message=""/>
       <echo message="AMP:  ${amp.file}"/>
    </target>
+
+   <target name="run" depends="package-jar">
+      <echo message="" />
+      <echo message="Use -Dfile= for the filename" />
+      <echo message="Use -Dsheets= for the sheets" />
+      <echo message="" />
+
+      <condition property="arg.file" value="${file}" else="">
+         <isset property="file" />
+      </condition>
+      <condition property="arg.sheets" value="${sheets}" else="">
+         <isset property="sheets" />
+      </condition>
+
+      <java classpathref="class.path" 
+            classname="com.quanticate.opensource.spreadsheetexcerpt.cli.SpreadsheetExcerpt">
+          <arg value="${arg.file}" />
+          <arg value="${arg.sheets}" />
+      </java>
+   </target>
 </project>

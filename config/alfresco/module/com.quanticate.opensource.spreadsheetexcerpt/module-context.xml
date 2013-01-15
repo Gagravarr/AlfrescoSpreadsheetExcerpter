@@ -2,4 +2,28 @@
 <!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
 
 <beans>
+   <!-- The Excel excerpter -->
+   <bean id="spreadsheetexcerpt.poi"
+         class="com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpter">
+   </bean>
+
+   <!-- TODO Excerpter Registry -->
+
+
+   <!-- Prompt for options / upload -->
+   <bean id="webscript.com.quanticate.opensource.spreadsheetexcerpt.spreadsheetexcerpt.get"
+         class="com.quanticate.opensource.spreadsheetexcerpt.webscript.SpreadsheetExcerptGet"
+         parent="webscript">
+       <property name="excerpter" ref="spreadsheetexcerpt.poi" />
+   </bean>
+
+   <!-- Does the excerpt and returns it -->
+   <bean id="webscript.com.quanticate.opensource.spreadsheetexcerpt.spreadsheetexcerpt.post"
+         class="com.quanticate.opensource.spreadsheetexcerpt.webscript.SpreadsheetExcerptPost"
+         parent="webscript">
+       <property name="excerpter" ref="spreadsheetexcerpt.poi" />
+   </bean>
+
+
+   <!-- TODO Action Bean -->
 </beans>

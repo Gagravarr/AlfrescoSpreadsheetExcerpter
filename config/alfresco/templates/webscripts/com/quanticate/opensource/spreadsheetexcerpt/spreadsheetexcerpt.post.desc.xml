@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Spreadsheet Perform Excerpt</shortname>
+  <description>Spreadsheet - Perform the Excerpt and make Read Only</description>
+  <url>/com/quanticate/spreadsheet/excerpt</url>
+  <format default="xls">argument</format>
+  <authentication>user</authentication>
+  <transaction>none</transaction>
+</webscript>
+
