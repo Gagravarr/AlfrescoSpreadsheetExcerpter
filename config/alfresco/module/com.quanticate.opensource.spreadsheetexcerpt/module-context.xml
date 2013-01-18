@@ -17,6 +17,13 @@
        <property name="excerpter" ref="spreadsheetexcerpt.poi" />
    </bean>
 
+   <!-- Accepts the file and returns the list of sheets -->
+   <bean id="webscript.com.quanticate.opensource.spreadsheetexcerpt.spreadsheetexcerptpick.post"
+         class="com.quanticate.opensource.spreadsheetexcerpt.webscript.SpreadsheetExcerptPickPost"
+         parent="webscript">
+       <property name="excerpter" ref="spreadsheetexcerpt.poi" />
+   </bean>
+
    <!-- Does the excerpt and returns it -->
    <bean id="webscript.com.quanticate.opensource.spreadsheetexcerpt.spreadsheetexcerpt.post"
          class="com.quanticate.opensource.spreadsheetexcerpt.webscript.SpreadsheetExcerptPost"

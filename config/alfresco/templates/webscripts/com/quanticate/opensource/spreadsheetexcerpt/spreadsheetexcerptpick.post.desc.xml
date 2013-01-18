@@ -1,5 +1,5 @@
 <webscript>
-  <shortname>Spreadsheet Excerpt Select</shortname>
+  <shortname>Spreadsheet Excerpt Sheet Select</shortname>
   <description>Spreadsheet - Pick the Sheets to Excerpt</description>
   <url>/com/quanticate/spreadsheet/excerptpick</url>
   <format default="html">argument</format>
