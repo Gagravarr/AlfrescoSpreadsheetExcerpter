@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.alfresco.repo.content.MimetypeMap;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.RichTextString;
@@ -18,10 +21,17 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class POIExcerpter implements MakeReadOnlyAndExcerpt
 {
+   private static final Set<String> SUPPORTED_MIMETYPES = 
+         Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(new String[] { 
+               MimetypeMap.MIMETYPE_EXCEL, 
+               MimetypeMap.MIMETYPE_OPENDOCUMENT_SPREADSHEET,
+               MimetypeMap.MIMETYPE_OPENDOCUMENT_SPREADSHEET_TEMPLATE
+         })));
+
    @Override
    public Set<String> getSupportedMimeTypes()
    {
-      return null; // TODO From MimeypesMap
+      return SUPPORTED_MIMETYPES;
    }
    
    private Workbook open(File f) throws IOException
