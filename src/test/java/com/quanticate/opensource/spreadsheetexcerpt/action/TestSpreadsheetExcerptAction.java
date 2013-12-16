@@ -1,17 +1,26 @@
 package com.quanticate.opensource.spreadsheetexcerpt.action;
 
+import org.alfresco.util.test.junitrules.ApplicationContextInit;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 public class TestSpreadsheetExcerptAction
 {
-   private SpreadsheetExcerptActionExecutor action;
+   private static SpreadsheetExcerptActionExecutor action;
+
+   @ClassRule public static ApplicationContextInit APP_CONTEXT_INIT = 
+         new ApplicationContextInit();
    
    @BeforeClass
    public static void setup()
    {
-      // TODO Pull up a context
-      // TODO Get the action executor
+      // Get the action executor
+      action = APP_CONTEXT_INIT.getApplicationContext().getBean(
+            "action.spreadsheetexcerpt", SpreadsheetExcerptActionExecutor.class);
+      
+      // Create some sample files
+      // TODO
    }
    
    @Test

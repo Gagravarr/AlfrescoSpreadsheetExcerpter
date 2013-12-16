@@ -3,7 +3,6 @@ package com.quanticate.opensource.spreadsheetexcerpt.excerpt;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.util.Set;
 
 import org.alfresco.service.cmr.repository.ContentReader;

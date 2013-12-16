@@ -13,7 +13,6 @@ import java.util.Set;
 import org.alfresco.repo.content.MimetypeMap;
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentWriter;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
@@ -93,22 +92,13 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
    @Override
    public void excerpt(String[] sheetsToKeep, ContentReader input, ContentWriter output) throws IOException
    {
-      Workbook wb = null;
-      
-      if (input.getMimetype().equals(MimetypeMap.MIMETYPE_EXCEL))
-      {
-         NPOIFSFileSystem fs = new NPOIFSFileSystem(input.getFileChannel());
-         wb = WorkbookFactory.create(fs);
-      }
-      else
-      {
-         wb = WorkbookFactory.create(input.getContentInputStream());
-      }
+      Workbook wb = open(input);
+      output.setMimetype(input.getMimetype());
+      excerpt(sheetsToKeep, wb, output.getContentOutputStream());
    }
 
    protected void excerpt(String[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
    {
-      Workbook wb = open(input);
       List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
       for (String sn : sheetsToKeep)
       {
@@ -123,18 +113,22 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
    }
 
    @Override
-   public void excerpt(int[] sheetsToKeep, ContentReader input,
-         ContentWriter output) throws IOException
-   {
-      // TODO Auto-generated method stub
-      
-   }
-
-   @Override
    public void excerpt(int[] sheetsToKeep, File input, OutputStream output) throws IOException
    {
       Workbook wb = open(input);
+      excerpt(sheetsToKeep, wb, output);
+   }
       
+   @Override
+   public void excerpt(int[] sheetsToKeep, ContentReader input, ContentWriter output) throws IOException
+   {
+      Workbook wb = open(input);
+      output.setMimetype(input.getMimetype());
+      excerpt(sheetsToKeep, wb, output.getContentOutputStream());
+   }
+
+   protected void excerpt(int[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
+   {
       List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
       for (int sn : sheetsToKeep)
       {

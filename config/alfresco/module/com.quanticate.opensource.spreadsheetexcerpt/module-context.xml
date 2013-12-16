@@ -32,5 +32,11 @@
    </bean>
 
 
-   <!-- TODO Action Bean -->
+   <!-- Action Bean -->
+   <bean id="action.spreadsheetexcerpt"
+         class="com.quanticate.opensource.spreadsheetexcerpt.action.SpreadsheetExcerptActionExecutor">
+       <property name="nodeService" ref="NodeService" />
+       <property name="contentService" ref="ContentService" />
+       <property name="excerpter" ref="spreadsheetexcerpt.poi" />
+   </bean>
 </beans>
