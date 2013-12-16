@@ -3,7 +3,11 @@ package com.quanticate.opensource.spreadsheetexcerpt.excerpt;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.Set;
+
+import org.alfresco.service.cmr.repository.ContentReader;
+import org.alfresco.service.cmr.repository.ContentWriter;
 
 public interface MakeReadOnlyAndExcerpt
 {
@@ -25,7 +29,19 @@ public interface MakeReadOnlyAndExcerpt
    
    /**
     * Marks the sheets to keep as read only (removing formulas), and
+    *  removes all other sheets.
+    */
+   public void excerpt(String[] sheetsToKeep, ContentReader input, ContentWriter output) throws IOException;
+   
+   /**
+    * Marks the sheets to keep as read only (removing formulas), and
     *  removes all other sheets
     */
    public void excerpt(int[] sheetsToKeep, File input, OutputStream output) throws IOException;
+      
+   /**
+    * Marks the sheets to keep as read only (removing formulas), and
+    *  removes all other sheets
+    */
+   public void excerpt(int[] sheetsToKeep, ContentReader input, ContentWriter output) throws IOException;
 }

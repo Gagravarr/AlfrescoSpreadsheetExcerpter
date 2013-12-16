@@ -11,7 +11,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.alfresco.repo.content.MimetypeMap;
+import org.alfresco.service.cmr.repository.ContentReader;
+import org.alfresco.service.cmr.repository.ContentWriter;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
@@ -45,6 +49,26 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
          throw new IOException("File broken", e);
       }
    }
+   private Workbook open(ContentReader reader) throws IOException
+   {
+      // If we can use a FileChannel, do
+      if (reader.getMimetype().equals(MimetypeMap.MIMETYPE_EXCEL))
+      {
+         NPOIFSFileSystem fs = new NPOIFSFileSystem(reader.getFileChannel());
+         return WorkbookFactory.create(fs);
+      }
+      
+      // Otherwise, ContentReader doesn't offer a File
+      // So, we have to go via the InputStream
+      try
+      {
+         return WorkbookFactory.create(reader.getContentInputStream());
+      }
+      catch (InvalidFormatException e)
+      {
+         throw new IOException("File broken", e);
+      }
+   }
 
    @Override
    public String[] getSheetNames(File f) throws IOException
@@ -63,7 +87,28 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
    public void excerpt(String[] sheetsToKeep, File input, OutputStream output) throws IOException
    {
       Workbook wb = open(input);
+      excerpt(sheetsToKeep, wb, output);
+   }
+
+   @Override
+   public void excerpt(String[] sheetsToKeep, ContentReader input, ContentWriter output) throws IOException
+   {
+      Workbook wb = null;
       
+      if (input.getMimetype().equals(MimetypeMap.MIMETYPE_EXCEL))
+      {
+         NPOIFSFileSystem fs = new NPOIFSFileSystem(input.getFileChannel());
+         wb = WorkbookFactory.create(fs);
+      }
+      else
+      {
+         wb = WorkbookFactory.create(input.getContentInputStream());
+      }
+   }
+
+   protected void excerpt(String[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
+   {
+      Workbook wb = open(input);
       List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
       for (String sn : sheetsToKeep)
       {
@@ -75,6 +120,14 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
       }
       
       excerpt(wb, keep, output);
+   }
+
+   @Override
+   public void excerpt(int[] sheetsToKeep, ContentReader input,
+         ContentWriter output) throws IOException
+   {
+      // TODO Auto-generated method stub
+      
    }
 
    @Override
