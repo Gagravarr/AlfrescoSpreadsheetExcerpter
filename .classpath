@@ -19,8 +19,9 @@
 	<classpathentry kind="lib" path="lib/compile/alfresco-core-4.1.4-SNAPSHOT-20130416.jar"/>
 	<classpathentry kind="lib" path="lib/compile/Alfresco-DataModel-Part-4.1.4-SNAPSHOT-20130416.jar"/>
 	<classpathentry kind="lib" path="lib/compile/Alfresco-Repository-Part-4.1.4-SNAPSHOT-20130416.jar"/>
+	<classpathentry kind="lib" path="lib/compile/commons-logging-1.1.1.jar"/>
 <!--
-	<classpathentry combineaccessrules="false" kind="src" path="/Alfresco_414"/>
+   <classpathentry combineaccessrules="false" kind="src" path="/Alfresco_414"/>
 -->
 	<classpathentry kind="output" path="build/eclipse-classes"/>
 </classpath>

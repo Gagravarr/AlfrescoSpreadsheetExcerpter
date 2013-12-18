@@ -20,6 +20,8 @@ import org.alfresco.service.cmr.repository.ContentWriter;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.namespace.QName;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.quanticate.opensource.spreadsheetexcerpt.excerpt.MakeReadOnlyAndExcerpt;
 
@@ -30,6 +32,8 @@ public class SpreadsheetExcerptActionExecutor extends ActionExecuterAbstractBase
    public static final String PARAM_KEEP_SHEETS = "keep-sheets";
    public static final String PARAM_REMOVE_FORMULAS = "remove-formulas";
    
+   private static Log logger = LogFactory.getLog(SpreadsheetExcerptActionExecutor.class);
+   
    private NodeService nodeService;
    private ContentService contentService;
    private MakeReadOnlyAndExcerpt excerpter;
@@ -38,9 +42,10 @@ public class SpreadsheetExcerptActionExecutor extends ActionExecuterAbstractBase
    protected void executeImpl(Action action, NodeRef sourceNodeRef)
    {
       // Sanity check
-      if (this.nodeService.exists(sourceNodeRef) == false)
+      if (! this.nodeService.exists(sourceNodeRef))
       {
           // node doesn't exist - can't do anything
+          logger.warn("Spreadsheet Excerpt called with non-existant node " + sourceNodeRef);
           return;
       }
       

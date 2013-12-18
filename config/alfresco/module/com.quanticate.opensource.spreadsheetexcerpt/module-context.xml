@@ -33,7 +33,7 @@
 
 
    <!-- Action Bean -->
-   <bean id="action.spreadsheetexcerpt"
+   <bean id="spreadsheet-excerpt"
          class="com.quanticate.opensource.spreadsheetexcerpt.action.SpreadsheetExcerptActionExecutor">
        <property name="nodeService" ref="NodeService" />
        <property name="contentService" ref="ContentService" />
