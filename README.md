@@ -26,5 +26,6 @@ restart Tomcat. You'll do something like
 
 License
 =======
-The code is available under the LGPL v3 License, which is the same license
-that Alfresco itself is made available under.
+The code is available under the Apache License version 2. However, it builds
+on top of Alfresco, which is under the LGPL v3 license, so in most cases
+the resulting system will fall under the stricter LGPL rules...
