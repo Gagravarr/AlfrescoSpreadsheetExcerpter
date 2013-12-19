@@ -98,6 +98,7 @@ public class SpreadsheetExcerptActionExecutor extends ActionExecuterAbstractBase
       {
          throw new AlfrescoRuntimeException("Error performing the Excerpt", e);
       }
+      logger.debug("Spreadsheet excerpt created");
    }
    
    private Map<QName,Serializable> buildNewNodeProperties(NodeRef sourceNodeRef)

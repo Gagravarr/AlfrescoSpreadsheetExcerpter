@@ -36,7 +36,7 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
    {
       return SUPPORTED_MIMETYPES;
    }
-   
+
    private Workbook open(File f) throws IOException
    {
       try
@@ -56,7 +56,7 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
          NPOIFSFileSystem fs = new NPOIFSFileSystem(reader.getFileChannel());
          return WorkbookFactory.create(fs);
       }
-      
+
       // Otherwise, ContentReader doesn't offer a File
       // So, we have to go via the InputStream
       try
@@ -68,12 +68,20 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
          throw new IOException("File broken", e);
       }
    }
+   private OutputStream open(ContentWriter dest, ContentReader source)
+   {
+      // Copy over the mimetype
+      dest.setMimetype(source.getMimetype());
+
+      // Now get the output
+      return dest.getContentOutputStream();
+   }
 
    @Override
    public String[] getSheetNames(File f) throws IOException
    {
       Workbook wb = open(f);
-      
+
       String[] names = new String[wb.getNumberOfSheets()];
       for (int i=0; i<names.length; i++)
       {
@@ -93,8 +101,10 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
    public void excerpt(String[] sheetsToKeep, ContentReader input, ContentWriter output) throws IOException
    {
       Workbook wb = open(input);
-      output.setMimetype(input.getMimetype());
-      excerpt(sheetsToKeep, wb, output.getContentOutputStream());
+
+      OutputStream stream = open(output, input);
+      excerpt(sheetsToKeep, wb, stream);
+      stream.close();
    }
 
    protected void excerpt(String[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
@@ -123,8 +133,10 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
    public void excerpt(int[] sheetsToKeep, ContentReader input, ContentWriter output) throws IOException
    {
       Workbook wb = open(input);
-      output.setMimetype(input.getMimetype());
-      excerpt(sheetsToKeep, wb, output.getContentOutputStream());
+
+      OutputStream stream = open(output, input);
+      excerpt(sheetsToKeep, wb, stream);
+      stream.close();
    }
 
    protected void excerpt(int[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
@@ -134,7 +146,7 @@ public class POIExcerpter implements MakeReadOnlyAndExcerpt
       {
          keep.add( wb.getSheetAt(sn) );
       }
-      
+
       excerpt(wb, keep, output);
    }
 
