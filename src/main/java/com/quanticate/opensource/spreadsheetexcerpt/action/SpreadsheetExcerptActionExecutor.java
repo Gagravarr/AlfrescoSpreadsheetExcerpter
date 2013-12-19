@@ -50,13 +50,23 @@ public class SpreadsheetExcerptActionExecutor extends ActionExecuterAbstractBase
       }
       
       // Get the details of the folder to save into
-      NodeRef destinationParent = (NodeRef)action.getParameterValue(PARAM_DESTINATION_FOLDER);
+      Object destinationParentO = action.getParameterValue(PARAM_DESTINATION_FOLDER);
+      NodeRef destinationParent = null;
+      if (destinationParentO instanceof NodeRef)
+      {
+         destinationParent = (NodeRef)destinationParentO;
+      }
+      else
+      {
+         destinationParent = new NodeRef(destinationParentO.toString());
+      }
       
       // Get the list of sheets to keep
       List<String> sheetsToKeepL = (List<String>)action.getParameterValue(PARAM_KEEP_SHEETS);
       String[] sheetsToKeep = sheetsToKeepL.toArray(new String[sheetsToKeepL.size()]);
+      logger.debug("Keeping sheets: " + sheetsToKeepL);
       
-      // TODO Remove Formulas
+      // TODO Remove Formulas option
       
       
       // Work out what to call the new node
@@ -66,6 +76,7 @@ public class SpreadsheetExcerptActionExecutor extends ActionExecuterAbstractBase
          throw new AlfrescoRuntimeException("Cannot create the new Spreadsheet in the same folder as the existing one");
       }
       QName newAssocName = sourceChildAssoc.getQName();
+      logger.debug("Creating new spreadsheet in " + destinationParent + " as " + newAssocName);
       
       // Get the original sheet
       ContentReader reader = contentService.getReader(sourceNodeRef, ContentModel.PROP_CONTENT);
