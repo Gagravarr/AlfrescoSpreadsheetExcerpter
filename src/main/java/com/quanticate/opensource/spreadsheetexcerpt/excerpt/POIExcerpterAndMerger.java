@@ -37,7 +37,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-public class POIExcerpter implements MakeReadOnlyAndExcerpt
+public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt
 {
    private static final Set<String> SUPPORTED_MIMETYPES = 
          Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(new String[] { 

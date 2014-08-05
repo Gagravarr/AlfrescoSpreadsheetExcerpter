@@ -34,7 +34,7 @@ import org.junit.Test;
 
 public class TestPOIExcerpter
 {
-   private POIExcerpter excerpter = new POIExcerpter();
+   private POIExcerpterAndMerger excerpter = new POIExcerpterAndMerger();
    
    @Test
    public void sheetListing() throws Exception

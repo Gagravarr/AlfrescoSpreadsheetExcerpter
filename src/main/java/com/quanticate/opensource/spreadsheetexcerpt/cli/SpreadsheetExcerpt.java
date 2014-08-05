@@ -24,7 +24,7 @@ import java.util.StringTokenizer;
 import org.alfresco.util.Pair;
 
 import com.quanticate.opensource.spreadsheetexcerpt.excerpt.MakeReadOnlyAndExcerpt;
-import com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpter;
+import com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpterAndMerger;
 
 /**
  * CLI Tool
@@ -43,7 +43,7 @@ public class SpreadsheetExcerpt
          System.exit(1);
       }
       
-      MakeReadOnlyAndExcerpt excerpter = new POIExcerpter();
+      MakeReadOnlyAndExcerpt excerpter = new POIExcerpterAndMerger();
       File input = opts.getFirst();
       int[] sheetsToKeep = opts.getSecond();
       

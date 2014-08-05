@@ -2,9 +2,9 @@
 <!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
 
 <beans>
-   <!-- The Excel excerpter -->
+   <!-- The Excel excerpter and merger -->
    <bean id="spreadsheetexcerpt.poi"
-         class="com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpter">
+         class="com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpterAndMerger">
    </bean>
 
    <!-- TODO Excerpter Registry -->
