@@ -18,7 +18,7 @@
 	<classpathentry kind="lib" path="lib/compile/org.springframework.core-3.0.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/compile/alfresco-core-4.1.4-SNAPSHOT-20130416.jar"/>
 	<classpathentry kind="lib" path="lib/compile/Alfresco-DataModel-Part-4.1.4-SNAPSHOT-20130416.jar"/>
-	<classpathentry kind="lib" path="lib/compile/Alfresco-Repository-Part-4.1.4-SNAPSHOT-20130416.jar"/>
+	<classpathentry kind="lib" path="lib/compile/Alfresco-Repository-Part-4.1.4-SNAPSHOT-20130416.jar" sourcepath="/home/nick/java/alfresco/projects/community_41/code/root/projects/repository/source/java"/>
 	<classpathentry kind="lib" path="lib/compile/commons-logging-1.1.1.jar"/>
 <!--
    <classpathentry combineaccessrules="false" kind="src" path="/Alfresco_414"/>
