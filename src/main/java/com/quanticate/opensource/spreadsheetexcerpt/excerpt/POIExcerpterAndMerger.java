@@ -37,7 +37,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
-public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt
+import com.quanticate.opensource.spreadsheetexcerpt.merge.MergeChangesFromExcerpt;
+
+public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChangesFromExcerpt
 {
    private static final Set<String> SUPPORTED_MIMETYPES = 
          Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(new String[] { 
@@ -91,6 +93,10 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt
       // Now get the output
       return dest.getContentOutputStream();
    }
+
+
+   // =================================================================== 
+
 
    @Override
    public String[] getSheetNames(File f) throws IOException
@@ -153,6 +159,34 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt
       excerpt(sheetsToKeep, wb, stream);
       stream.close();
    }
+
+
+   // =================================================================== 
+
+
+   @Override
+   public void merge(String[] sheetsToMerge, File excerptInput, File fullInput, OutputStream output) throws IOException
+   {
+      Workbook excerptWB = open(excerptInput);
+      Workbook fullWB = open(fullInput);
+
+      merge(excerptWB, fullWB, sheetsToMerge, output);
+   }
+
+   @Override
+   public void excerpt(String[] sheetsToMerge, ContentReader excerptInput, ContentReader fullInput, ContentWriter output) throws IOException
+   {
+      Workbook excerptWB = open(excerptInput);
+      Workbook fullWB = open(fullInput);
+
+      OutputStream stream = open(output, fullInput);
+      merge(excerptWB, fullWB, sheetsToMerge, stream);
+      stream.close();
+   }
+
+
+   // =================================================================== 
+
 
    protected void excerpt(int[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
    {
@@ -217,5 +251,19 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt
       
       // Save
       wb.write(output);
+   }
+
+
+   // =================================================================== 
+
+   private void merge(Workbook excerptWB, Workbook fullWB, String[] sheetsToMerge, OutputStream output) throws IOException
+   {
+      // TODO Refactor / re-order String[] to List<> logic
+      // TODO Implement
+   }
+
+   private void merge(Workbook excerptWB, Workbook fullWB, List<Sheet> sheetsToMerge, OutputStream output) throws IOException
+   {
+      // TODO Implement
    }
 }

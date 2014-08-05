@@ -28,6 +28,8 @@ import com.quanticate.opensource.spreadsheetexcerpt.excerpt.MakeReadOnlyAndExcer
 /**
  * Opposite of {@link MakeReadOnlyAndExcerpt} - takes values from
  *  an Excerpted sheet and merges them back into a master one
+ * 
+ * TODO More javadoc
  */
 public interface MergeChangesFromExcerpt
 {
@@ -48,5 +50,5 @@ public interface MergeChangesFromExcerpt
     *  Full version, copy over the (possibly) updated values from the
     *  Excerpt version.
     */
-   public void excerpt(String[] sheetsToMerge, ContentReader excerptInput, File fullInput, ContentWriter output) throws IOException;
+   public void excerpt(String[] sheetsToMerge, ContentReader excerptInput, ContentReader fullInput, ContentWriter output) throws IOException;
 }
