@@ -111,6 +111,10 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
       return names;
    }
 
+
+   // =================================================================== 
+
+
    @Override
    public void excerpt(String[] sheetsToKeep, File input, OutputStream output) throws IOException
    {
@@ -126,21 +130,6 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
       OutputStream stream = open(output, input);
       excerpt(sheetsToKeep, wb, stream);
       stream.close();
-   }
-
-   protected void excerpt(String[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
-   {
-      List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
-      for (String sn : sheetsToKeep)
-      {
-         Sheet s = wb.getSheet(sn);
-         if (s == null)
-            throw new IllegalArgumentException("Sheet not found with name '" + sn + "'");
-            
-         keep.add(s);
-      }
-      
-      excerpt(wb, keep, output);
    }
 
    @Override
@@ -188,6 +177,21 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
    // =================================================================== 
 
 
+   protected void excerpt(String[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
+   {
+      List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
+      for (String sn : sheetsToKeep)
+      {
+         Sheet s = wb.getSheet(sn);
+         if (s == null)
+            throw new IllegalArgumentException("Sheet not found with name '" + sn + "'");
+
+         keep.add(s);
+      }
+
+      excerpt(wb, keep, output);
+   }
+
    protected void excerpt(int[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
    {
       List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
@@ -198,6 +202,10 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
 
       excerpt(wb, keep, output);
    }
+
+
+   // =================================================================== 
+
 
    private void excerpt(Workbook wb, List<Sheet> sheetsToKeep, OutputStream output) throws IOException
    {
