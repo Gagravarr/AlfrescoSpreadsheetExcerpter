@@ -28,8 +28,6 @@ import com.quanticate.opensource.spreadsheetexcerpt.excerpt.MakeReadOnlyAndExcer
 /**
  * Opposite of {@link MakeReadOnlyAndExcerpt} - takes values from
  *  an Excerpted sheet and merges them back into a master one
- * 
- * TODO More javadoc
  */
 public interface MergeChangesFromExcerpt
 {
@@ -42,6 +40,11 @@ public interface MergeChangesFromExcerpt
     * For matching Sheets in the two files, for non-Formula cells in the
     *  Full version, copy over the (possibly) updated values from the
     *  Excerpt version.
+    *
+    * @param sheetsToMerge The names of the sheets to merge from the excerpt file
+    * @param excerptInput The file to read the cells to merge from
+    * @param fullInput The full file, which will have data in suitable cells in the given sheets replaced
+    * @param output Where to write the merged file to
     */
    public void merge(String[] sheetsToMerge, File excerptInput, File fullInput, OutputStream output) throws IOException;
    
@@ -49,6 +52,11 @@ public interface MergeChangesFromExcerpt
     * For matching Sheets in the two files, for non-Formula cells in the
     *  Full version, copy over the (possibly) updated values from the
     *  Excerpt version.
+    *
+    * @param sheetsToMerge The names of the sheets to merge from the excerpt file
+    * @param excerptInput The source file to read the cells to merge from
+    * @param fullInput The full source file, which will have data in suitable cells in the given sheets replaced
+    * @param output Where to write the merged file to
     */
-   public void excerpt(String[] sheetsToMerge, ContentReader excerptInput, ContentReader fullInput, ContentWriter output) throws IOException;
+   public void merge(String[] sheetsToMerge, ContentReader excerptInput, ContentReader fullInput, ContentWriter output) throws IOException;
 }

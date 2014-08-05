@@ -111,6 +111,34 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
       return names;
    }
 
+   protected List<Sheet> identifySheets(String[] sheetNames, Workbook workbook)
+   {
+      List<Sheet> sheets = new ArrayList<Sheet>(sheetNames.length);
+      for (String sn : sheetNames)
+      {
+         Sheet s = workbook.getSheet(sn);
+         if (s == null)
+            throw new IllegalArgumentException("Sheet not found with name '" + sn + "'");
+
+         sheets.add(s);
+      }
+      return sheets;
+   }
+   protected List<Sheet> identifySheets(int[] sheetNums, Workbook workbook)
+   {
+      int maxSheetNumber = workbook.getNumberOfSheets() - 1;
+
+      List<Sheet> sheets = new ArrayList<Sheet>(sheetNums.length);
+      for (int sn : sheetNums)
+      {
+         if (sn > maxSheetNumber)
+            throw new IllegalArgumentException("Sheet not found with index '" + sn + "'");
+
+         sheets.add( workbook.getSheetAt(sn) );
+      }
+      return sheets;
+   }
+
 
    // =================================================================== 
 
@@ -163,7 +191,7 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
    }
 
    @Override
-   public void excerpt(String[] sheetsToMerge, ContentReader excerptInput, ContentReader fullInput, ContentWriter output) throws IOException
+   public void merge(String[] sheetsToMerge, ContentReader excerptInput, ContentReader fullInput, ContentWriter output) throws IOException
    {
       Workbook excerptWB = open(excerptInput);
       Workbook fullWB = open(fullInput);
@@ -179,27 +207,13 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
 
    protected void excerpt(String[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
    {
-      List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
-      for (String sn : sheetsToKeep)
-      {
-         Sheet s = wb.getSheet(sn);
-         if (s == null)
-            throw new IllegalArgumentException("Sheet not found with name '" + sn + "'");
-
-         keep.add(s);
-      }
-
+      List<Sheet> keep = identifySheets(sheetsToKeep, wb);
       excerpt(wb, keep, output);
    }
 
    protected void excerpt(int[] sheetsToKeep, Workbook wb, OutputStream output) throws IOException
    {
-      List<Sheet> keep = new ArrayList<Sheet>(sheetsToKeep.length);
-      for (int sn : sheetsToKeep)
-      {
-         keep.add( wb.getSheetAt(sn) );
-      }
-
+      List<Sheet> keep = identifySheets(sheetsToKeep, wb);
       excerpt(wb, keep, output);
    }
 
@@ -266,12 +280,20 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
 
    private void merge(Workbook excerptWB, Workbook fullWB, String[] sheetsToMerge, OutputStream output) throws IOException
    {
-      // TODO Refactor / re-order String[] to List<> logic
-      // TODO Implement
-   }
+      // Identify the sheets in both workbooks
+      List<Sheet> sourceSheets = identifySheets(sheetsToMerge, excerptWB);
+      List<Sheet> destSheets = identifySheets(sheetsToMerge, fullWB);
 
-   private void merge(Workbook excerptWB, Workbook fullWB, List<Sheet> sheetsToMerge, OutputStream output) throws IOException
-   {
-      // TODO Implement
+      // Process each sheet in turn
+      for (int i=0; i<sheetsToMerge.length; i++)
+      {
+         Sheet source = sourceSheets.get(i);
+         Sheet dest = destSheets.get(i);
+
+         // TODO Implement
+      }
+
+      // Save the new file
+      fullWB.write(output);
    }
 }
