@@ -31,6 +31,7 @@ import org.alfresco.service.cmr.repository.ContentWriter;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -347,7 +348,8 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
 
       // Re-evaluate all the formulas in the destination workbook, now that
       //  we have updated cells in it
-      // TODO Implement
+      FormulaEvaluator eval = fullWB.getCreationHelper().createFormulaEvaluator();
+      eval.evaluateAll();
 
       // Save the new file
       fullWB.write(output);
