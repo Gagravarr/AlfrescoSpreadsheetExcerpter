@@ -27,7 +27,8 @@ import com.quanticate.opensource.spreadsheetexcerpt.excerpt.MakeReadOnlyAndExcer
 
 /**
  * Opposite of {@link MakeReadOnlyAndExcerpt} - takes values from
- *  an Excerpted sheet and merges them back into a master one
+ *  an Excerpted sheet and merges them back into a master one, then
+ *  re-evaluates formulas that depend on them
  */
 public interface MergeChangesFromExcerpt extends SpreadsheetHandler
 {

@@ -284,7 +284,7 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
       List<Sheet> sourceSheets = identifySheets(sheetsToMerge, excerptWB);
       List<Sheet> destSheets = identifySheets(sheetsToMerge, fullWB);
 
-      // Process each sheet in turn
+      // Process each sheet from the excerpt in turn
       for (int i=0; i<sheetsToMerge.length; i++)
       {
          Sheet source = sourceSheets.get(i);
@@ -344,6 +344,10 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
             }
          }
       }
+
+      // Re-evaluate all the formulas in the destination workbook, now that
+      //  we have updated cells in it
+      // TODO Implement
 
       // Save the new file
       fullWB.write(output);

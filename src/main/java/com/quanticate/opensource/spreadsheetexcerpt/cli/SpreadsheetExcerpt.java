@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import org.alfresco.util.Pair;
 
 import com.quanticate.opensource.spreadsheetexcerpt.excerpt.MakeReadOnlyAndExcerpt;
-import com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpterAndMerger;
 
 /**
  * CLI Tool for running the Excerpt
@@ -31,17 +30,18 @@ public class SpreadsheetExcerpt extends SpreadsheetCLI
    public static void main(String[] args) throws Exception
    {
       Pair<File[],int[]> opts = processArgs(args, 1, "SpreadsheetExcerpt");
-      
-      MakeReadOnlyAndExcerpt excerpter = new POIExcerpterAndMerger();
+
       File input = opts.getFirst()[0];
       int[] sheetsToKeep = opts.getSecond();
-      
+
+      MakeReadOnlyAndExcerpt excerpter = (MakeReadOnlyAndExcerpt)getHandler(input, true);
+
       File outF = new File("output.xls");
       FileOutputStream out = new FileOutputStream(outF);
-      
+
       excerpter.excerpt(sheetsToKeep, input, out);
       out.close();
-      
+
       System.out.println("Output as "  + outF);
    }
 }

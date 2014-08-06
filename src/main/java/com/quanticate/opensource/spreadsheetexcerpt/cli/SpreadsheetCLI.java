@@ -16,18 +16,38 @@
 package com.quanticate.opensource.spreadsheetexcerpt.cli;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import org.alfresco.util.Pair;
 
+import com.quanticate.opensource.spreadsheetexcerpt.SpreadsheetHandler;
+import com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpterAndMerger;
+
 /**
  * Parent for the CLI tools
+ *
+ * TODO Spring enable
  */
 public abstract class SpreadsheetCLI
 {
-   public static Pair<File[], int[]> processArgs(String[] args, int expectedFiles, String name)
+   public static SpreadsheetHandler getHandler(File file, boolean forExcerpt)
+   {
+      if (file.getName().endsWith(".xls") ||
+          file.getName().endsWith(".xlsx"))
+      {
+         return new POIExcerpterAndMerger();
+      }
+      else
+      {
+         throw new IllegalArgumentException("Unsupported file type: " + file);
+      }
+   }
+
+   public static Pair<File[], int[]> processArgs(String[] args, int expectedFiles, String programName)
+         throws IOException
    {
       Pair<File[], int[]> opts = parseArgs(args, expectedFiles);
 
@@ -35,7 +55,7 @@ public abstract class SpreadsheetCLI
       {
          StringBuffer sb = new StringBuffer();
          sb.append("   ");
-         sb.append(name);
+         sb.append(programName);
          for (int i=0; i<expectedFiles; i++) {
             sb.append(" <filename>");
          }
@@ -48,14 +68,17 @@ public abstract class SpreadsheetCLI
 
       if (opts.getSecond().length == 0)
       {
-         // TODO Implement listing
-//         String[] names = excerpter.getSheetNames(input); 
-         String[] names = new String[0]; 
-
-         System.out.println("Sheets:");
-         for (int i=0; i<names.length; i++)
+         for (File f : opts.getFirst())
          {
-            System.out.println("  " + i + " - " + names[i]);
+            SpreadsheetHandler handler = getHandler(f, true);
+            String[] names = handler.getSheetNames(f);
+
+            System.out.println();
+            System.out.println("Sheets in " + f);
+            for (int i=0; i<names.length; i++)
+            {
+               System.out.println("  " + i + " - " + names[i]);
+            }
          }
          System.exit(0);
       }

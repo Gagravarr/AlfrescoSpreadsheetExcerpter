@@ -20,7 +20,6 @@ import java.io.FileOutputStream;
 
 import org.alfresco.util.Pair;
 
-import com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpterAndMerger;
 import com.quanticate.opensource.spreadsheetexcerpt.merge.MergeChangesFromExcerpt;
 
 /**
@@ -31,12 +30,12 @@ public class SpreadsheetMerge extends SpreadsheetCLI
    public static void main(String[] args) throws Exception
    {
       Pair<File[],int[]> opts = processArgs(args, 2, "SpreadsheetMerge");
-      
-      MergeChangesFromExcerpt merger = new POIExcerpterAndMerger();
-      
+
       File excerpt = opts.getFirst()[0];
       File full = opts.getFirst()[1];
-      
+
+      MergeChangesFromExcerpt merger = (MergeChangesFromExcerpt)getHandler(full, false);
+
       String[] sheets = new String[opts.getSecond().length];
       String[] excerptAllSheets = merger.getSheetNames(excerpt);
       for (int i=0; i<sheets.length; i++)
@@ -44,13 +43,13 @@ public class SpreadsheetMerge extends SpreadsheetCLI
          int sheetNumber = opts.getSecond()[i];
          sheets[i] = excerptAllSheets[sheetNumber];
       }
-      
+
       File outF = new File("output.xls");
       FileOutputStream out = new FileOutputStream(outF);
 
       merger.merge(sheets, excerpt, full, out);
       out.close();
-      
+
       System.out.println("Output as "  + outF);
    }
 }
