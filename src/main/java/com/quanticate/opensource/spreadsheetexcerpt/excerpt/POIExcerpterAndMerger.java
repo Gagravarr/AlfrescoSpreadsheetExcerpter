@@ -290,7 +290,59 @@ public class POIExcerpterAndMerger implements MakeReadOnlyAndExcerpt, MergeChang
          Sheet source = sourceSheets.get(i);
          Sheet dest = destSheets.get(i);
 
-         // TODO Implement
+         for (Row srcR : source)
+         {
+            for (Cell srcC : srcR)
+            {
+               if (srcC.getCellType() == Cell.CELL_TYPE_FORMULA ||
+                   srcC.getCellType() == Cell.CELL_TYPE_ERROR)
+               {
+                  // Don't merge these kinds of cells
+               }
+               else
+               {
+                  Row destR = dest.getRow(srcR.getRowNum());
+                  if (destR == null)
+                  {
+                     // Newly added row to the excerpt file, skip this
+                  }
+                  else
+                  {
+                     Cell destC = destR.getCell(srcC.getColumnIndex());
+                     if (destC == null && srcC.getCellType() == Cell.CELL_TYPE_BLANK)
+                     {
+                        // Both are empty, don't need to do anything
+                     }
+                     else
+                     {
+                        if (destC == null)
+                           destC = destR.createCell(srcC.getColumnIndex(), srcC.getCellType());
+
+                        // Sync contents
+                        if (srcC.getCellType() == Cell.CELL_TYPE_BLANK)
+                        {
+                           destC.setCellType(Cell.CELL_TYPE_BLANK);
+                        }
+                        else if (srcC.getCellType() == Cell.CELL_TYPE_BOOLEAN)
+                        {
+                           destC.setCellValue(srcC.getBooleanCellValue());
+                        }
+                        else if (srcC.getCellType() == Cell.CELL_TYPE_NUMERIC)
+                        {
+                           destC.setCellValue(srcC.getNumericCellValue());
+                        }
+                        else if (srcC.getCellType() == Cell.CELL_TYPE_STRING)
+                        {
+                           destC.setCellValue(srcC.getStringCellValue());
+                        }
+
+                        // Sync formatting rules
+                        // TODO
+                     }
+                  }
+               }
+            }
+         }
       }
 
       // Save the new file
