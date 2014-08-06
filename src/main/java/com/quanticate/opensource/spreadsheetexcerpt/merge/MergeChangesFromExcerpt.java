@@ -18,29 +18,19 @@ package com.quanticate.opensource.spreadsheetexcerpt.merge;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Set;
 
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentWriter;
 
+import com.quanticate.opensource.spreadsheetexcerpt.SpreadsheetHandler;
 import com.quanticate.opensource.spreadsheetexcerpt.excerpt.MakeReadOnlyAndExcerpt;
 
 /**
  * Opposite of {@link MakeReadOnlyAndExcerpt} - takes values from
  *  an Excerpted sheet and merges them back into a master one
  */
-public interface MergeChangesFromExcerpt
+public interface MergeChangesFromExcerpt extends SpreadsheetHandler
 {
-   /**
-    * @return The Mimetype(s) that are supported
-    */
-   public Set<String> getSupportedMimeTypes();
-
-   /**
-    * @return The Sheetnames found in the given file
-    */
-   public String[] getSheetNames(File f) throws IOException;
-
    /**
     * For matching Sheets in the two files, for non-Formula cells in the
     *  Full version, copy over the (possibly) updated values from the

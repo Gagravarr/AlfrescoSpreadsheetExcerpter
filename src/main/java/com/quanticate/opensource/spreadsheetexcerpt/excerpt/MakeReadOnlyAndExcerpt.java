@@ -18,23 +18,14 @@ package com.quanticate.opensource.spreadsheetexcerpt.excerpt;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Set;
 
 import org.alfresco.service.cmr.repository.ContentReader;
 import org.alfresco.service.cmr.repository.ContentWriter;
 
-public interface MakeReadOnlyAndExcerpt
+import com.quanticate.opensource.spreadsheetexcerpt.SpreadsheetHandler;
+
+public interface MakeReadOnlyAndExcerpt extends SpreadsheetHandler
 {
-   /**
-    * @return The Mimetype(s) that are supported
-    */
-   public Set<String> getSupportedMimeTypes();
-
-   /**
-    * @return The Sheetnames found in the given file
-    */
-   public String[] getSheetNames(File f) throws IOException;
-
    /**
     * Marks the sheets to keep as read only (removing formulas), and
     *  removes all other sheets
