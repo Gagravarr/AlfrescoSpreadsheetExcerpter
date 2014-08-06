@@ -29,30 +29,30 @@ public interface MakeReadOnlyAndExcerpt
     * @return The Mimetype(s) that are supported
     */
    public Set<String> getSupportedMimeTypes();
-   
+
    /**
     * @return The Sheetnames found in the given file
     */
    public String[] getSheetNames(File f) throws IOException;
-   
+
    /**
     * Marks the sheets to keep as read only (removing formulas), and
     *  removes all other sheets
     */
    public void excerpt(String[] sheetsToKeep, File input, OutputStream output) throws IOException;
-   
+
    /**
     * Marks the sheets to keep as read only (removing formulas), and
     *  removes all other sheets.
     */
    public void excerpt(String[] sheetsToKeep, ContentReader input, ContentWriter output) throws IOException;
-   
+
    /**
     * Marks the sheets to keep as read only (removing formulas), and
     *  removes all other sheets
     */
    public void excerpt(int[] sheetsToKeep, File input, OutputStream output) throws IOException;
-      
+
    /**
     * Marks the sheets to keep as read only (removing formulas), and
     *  removes all other sheets

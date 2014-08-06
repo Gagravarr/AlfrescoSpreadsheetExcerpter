@@ -35,7 +35,12 @@ public interface MergeChangesFromExcerpt
     * @return The Mimetype(s) that are supported
     */
    public Set<String> getSupportedMimeTypes();
-   
+
+   /**
+    * @return The Sheetnames found in the given file
+    */
+   public String[] getSheetNames(File f) throws IOException;
+
    /**
     * For matching Sheets in the two files, for non-Formula cells in the
     *  Full version, copy over the (possibly) updated values from the
@@ -47,7 +52,7 @@ public interface MergeChangesFromExcerpt
     * @param output Where to write the merged file to
     */
    public void merge(String[] sheetsToMerge, File excerptInput, File fullInput, OutputStream output) throws IOException;
-   
+
    /**
     * For matching Sheets in the two files, for non-Formula cells in the
     *  Full version, copy over the (possibly) updated values from the
