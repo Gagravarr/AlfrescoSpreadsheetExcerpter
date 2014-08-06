@@ -20,26 +20,35 @@ import java.io.FileOutputStream;
 
 import org.alfresco.util.Pair;
 
-import com.quanticate.opensource.spreadsheetexcerpt.excerpt.MakeReadOnlyAndExcerpt;
 import com.quanticate.opensource.spreadsheetexcerpt.excerpt.POIExcerpterAndMerger;
+import com.quanticate.opensource.spreadsheetexcerpt.merge.MergeChangesFromExcerpt;
 
 /**
- * CLI Tool for running the Excerpt
+ * CLI Tool for running a merge
  */
-public class SpreadsheetExcerpt extends SpreadsheetCLI
+public class SpreadsheetMerge extends SpreadsheetCLI
 {
    public static void main(String[] args) throws Exception
    {
-      Pair<File[],int[]> opts = processArgs(args, 1, "SpreadsheetExcerpt");
+      Pair<File[],int[]> opts = processArgs(args, 2, "SpreadsheetMerge");
       
-      MakeReadOnlyAndExcerpt excerpter = new POIExcerpterAndMerger();
-      File input = opts.getFirst()[0];
-      int[] sheetsToKeep = opts.getSecond();
+      MergeChangesFromExcerpt merger = new POIExcerpterAndMerger();
+      
+      File excerpt = opts.getFirst()[0];
+      File full = opts.getFirst()[1];
+      
+      String[] sheets = new String[opts.getSecond().length];
+      String[] excerptAllSheets = merger.getSheetNames(excerpt);
+      for (int i=0; i<sheets.length; i++)
+      {
+         int sheetNumber = opts.getSecond()[i];
+         sheets[i] = excerptAllSheets[sheetNumber];
+      }
       
       File outF = new File("output.xls");
       FileOutputStream out = new FileOutputStream(outF);
-      
-      excerpter.excerpt(sheetsToKeep, input, out);
+
+      merger.merge(sheets, excerpt, full, out);
       out.close();
       
       System.out.println("Output as "  + outF);
